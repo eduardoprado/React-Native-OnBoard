@@ -6,7 +6,8 @@
  * @flow
  */
 
-import React, {Component} from 'react';
+import React from 'react';
+import {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 
 const instructions = Platform.select({
@@ -20,7 +21,7 @@ export default class HelloWorldApp extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Hello, world!</Text>
+        <Text style={styles.welcome}>Hello, world</Text>
         <Text style={styles.instructions}>My first App</Text>
       </View>
     );
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 35,
+    fontSize: 30,
     textAlign: 'center',
     margin: 10,
   },
