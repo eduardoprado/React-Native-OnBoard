@@ -16,18 +16,17 @@ const instructions = Platform.select({
     'Shake or press menu button for dev menu',
 });
 
-
-export default class App extends Component {
+export default class HelloWorldApp extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Nati</Text>
-        <Text style={styles.instructions}>VOOOOOOOO</Text>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <Text style={styles.welcome}>Hello, world!</Text>
+        <Text style={styles.instructions}>My first App</Text>
       </View>
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -37,13 +36,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 35,
     textAlign: 'center',
     margin: 10,
   },
   instructions: {
+    fontSize: 15,
     textAlign: 'center',
-    color: '#333333',
+    color: '#F00000',
     marginBottom: 5,
   },
 });
