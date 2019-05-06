@@ -8,6 +8,7 @@ export default class LoginForm extends Component {
         <View style={styles.container}>
           <TextInput 
           placeholder="email"
+          autoCapitalize = "none"
           style={styles.input}
           />
           <TextInput 
