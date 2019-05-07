@@ -5,24 +5,24 @@ import {Platform, StyleSheet, TextInput, View, TouchableOpacity, Text} from 'rea
 
 export default class LoginForm extends Component<any, {
     email: string;
-    senha: string;
+    password: string;
     emailValdate: boolean;
-    senhaValdate: boolean}> 
+    passwordValidate: boolean}>
     {
     constructor(props: any){
         super(props);
         this.state={
             email:'',
-            senha:'',
+            password:'',
             emailValdate: false,
-            senhaValdate: false
+            passwordValidate: false
         }
     }
     validate = (event:any) =>{
-        var email = this.state.email
-        var senha = this.state.senha
-        var validemail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.com$/
-        var validsenha = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/
+        let email = this.state.email
+        let password = this.state.password
+        const validemail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.com$/
+        const validPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/
 
         if (!validemail.test(email)){
             this.setState({
@@ -34,14 +34,14 @@ export default class LoginForm extends Component<any, {
                 emailValdate: true
             })
         }
-        if (!validsenha.test(senha)){
+        if (!validPassword.test(password)){
             this.setState({
-                senhaValdate: false
+                passwordValidate: false
             })
         }
-        else if (validsenha.test(senha)){
+        else if (validPassword.test(password)){
             this.setState({
-                senhaValdate: true
+                passwordValidate: true
             })
         }
     }
@@ -49,16 +49,16 @@ export default class LoginForm extends Component<any, {
 
     render() {
       const emailValid = this.state.emailValdate
-      const senhaValid = this.state.senhaValdate
-      
+      const passwordValid = this.state.passwordValidate
+
       return (
-        
+
         <View style={styles.container}>
           <Text>
             Seu e-mail está {emailValid ? 'correto':'inválido'}
           </Text>
 
-          <TextInput 
+          <TextInput
           onChangeText={(text)=>this.setState({email:text})}
           placeholder="email"
           autoCapitalize = "none"
@@ -66,26 +66,26 @@ export default class LoginForm extends Component<any, {
           />
 
           <Text>
-            Sua senha está {senhaValid ? 'correto':'inválida'} 
-          </Text>   
+            Sua senha está {passwordValid ? 'correto':'inválida'}
+          </Text>
 
-          <TextInput 
-          onChangeText={(text)=>this.setState({senha:text})}
+          <TextInput
+          onChangeText={(text)=>this.setState({password:text})}
           placeholder="senha"
           secureTextEntry
           style={styles.input}
           />
 
-          <TouchableOpacity 
+          <TouchableOpacity
           style={styles.buttonContainer}
           onPress={this.validate}
           >
             <Text style={styles.buttonText}>
                 Entrar
-            </Text> 
-          
+            </Text>
+
           </TouchableOpacity>
-          
+
         </View>
       );
     }
