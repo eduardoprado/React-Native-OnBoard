@@ -2,22 +2,84 @@ import React from 'react';
 import {Component} from 'react';
 import {Platform, StyleSheet, TextInput, View, TouchableOpacity, Text} from 'react-native';
 
-export default class LoginForm extends Component {
+
+export default class LoginForm extends Component<any, {
+    email: string;
+    senha: string;
+    emailValdate: boolean;
+    senhaValdate: boolean}> 
+    {
+    constructor(props: any){
+        super(props);
+        this.state={
+            email:'',
+            senha:'',
+            emailValdate: false,
+            senhaValdate: false
+        }
+    }
+    validate = (event:any) =>{
+        var email = this.state.email
+        var senha = this.state.senha
+        var validemail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.com$/
+        var validsenha = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/
+
+        if (!validemail.test(email)){
+            this.setState({
+                emailValdate: false
+            })
+        }
+        else if (validemail.test(email)){
+            this.setState({
+                emailValdate: true
+            })
+        }
+        if (!validsenha.test(senha)){
+            this.setState({
+                senhaValdate: false
+            })
+        }
+        else if (validsenha.test(senha)){
+            this.setState({
+                senhaValdate: true
+            })
+        }
+    }
+
+
     render() {
+      const emailValid = this.state.emailValdate
+      const senhaValid = this.state.senhaValdate
+      
       return (
+        
         <View style={styles.container}>
+          <Text>
+            Seu e-mail está {emailValid ? 'correto':'inválido'}
+          </Text>
+
           <TextInput 
+          onChangeText={(text)=>this.setState({email:text})}
           placeholder="email"
           autoCapitalize = "none"
           style={styles.input}
           />
+
+          <Text>
+            Sua senha está {senhaValid ? 'correto':'inválida'} 
+          </Text>   
+
           <TextInput 
+          onChangeText={(text)=>this.setState({senha:text})}
           placeholder="senha"
           secureTextEntry
           style={styles.input}
           />
 
-          <TouchableOpacity style={styles.buttonContainer}>
+          <TouchableOpacity 
+          style={styles.buttonContainer}
+          onPress={this.validate}
+          >
             <Text style={styles.buttonText}>
                 Entrar
             </Text> 
@@ -27,7 +89,7 @@ export default class LoginForm extends Component {
         </View>
       );
     }
-  }
+}
 
   const styles = StyleSheet.create({
     container: {
