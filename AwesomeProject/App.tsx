@@ -21,7 +21,7 @@ export default class HelloWorldApp extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Hello, world</Text>
+        <Text style={styles.welcome}>Hello, worl</Text>
         <Text style={styles.instructions}>My first App</Text>
       </View>
     );
