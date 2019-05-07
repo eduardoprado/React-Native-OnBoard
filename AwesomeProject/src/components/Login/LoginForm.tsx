@@ -1,7 +1,22 @@
 import React from 'react';
 import {Component} from 'react';
 import {Platform, StyleSheet, TextInput, View, TouchableOpacity, Text} from 'react-native';
+import { gql } from "apollo-boost";
+import { Mutation } from "react-apollo";
 
+const mutationToServer = gql`
+  mutation LoginOperation {
+    Login (data:{
+      email: "admin@taqtile.com"
+      password: "1111"
+    }){
+    user{
+      id
+      birthDate
+      }
+    }
+  }
+`;
 
 export default class LoginForm extends Component<any, {
     email: string;

@@ -9,42 +9,23 @@
 import React from 'react';
 import {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
+import LoginPage from './src/components/Login/LoginPage';
+import ApolloClient from "apollo-boost";
+import { ApolloProvider } from "react-apollo";
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+const client = new ApolloClient({
+  uri: "https://tq-template-server-sample.herokuapp.com/graphql"
 });
 
-export default class HelloWorldApp extends Component {
+
+export default class App extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Hello, worl</Text>
-        <Text style={styles.instructions}>My first App</Text>
-      </View>
+      <ApolloProvider client={client}>
+        <LoginPage/>
+      </ApolloProvider>
+
     );
   }
 }
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 30,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    fontSize: 15,
-    textAlign: 'center',
-    color: '#F00000',
-    marginBottom: 5,
-  },
-});
