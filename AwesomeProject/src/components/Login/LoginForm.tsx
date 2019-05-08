@@ -1,8 +1,6 @@
-import React from 'react';
-import {Component} from 'react';
-import {Platform, StyleSheet, TextInput, View, TouchableOpacity, Text} from 'react-native';
 import { gql } from "apollo-boost";
-import { Mutation } from "react-apollo";
+import React, { Component } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 const mutationToServer = gql`
   mutation LoginOperation {
@@ -66,19 +64,19 @@ export default class LoginForm extends Component<any, {
       const emailValid = this.state.emailValdate
       const passwordValid = this.state.passwordValidate
 
-      return (
+    return (
 
-        <View style={styles.container}>
-          <Text>
-            Seu e-mail está {emailValid ? 'correto':'inválido'}
-          </Text>
+      <View style={styles.container}>
+        <Text>
+          Seu e-mail está {emailValid ? 'correto' : 'inválido'}
+        </Text>
 
-          <TextInput
-          onChangeText={(text)=>this.setState({email:text})}
+        <TextInput
+          onChangeText={(text) => this.setState({ email: text })}
           placeholder="email"
-          autoCapitalize = "none"
+          autoCapitalize="none"
           style={styles.input}
-          />
+        />
 
           <Text>
             Sua senha está {passwordValid ? 'correto':'inválida'}
@@ -89,42 +87,44 @@ export default class LoginForm extends Component<any, {
           placeholder="senha"
           secureTextEntry
           style={styles.input}
-          />
+        />
 
-          <TouchableOpacity
-          style={styles.buttonContainer}
+        <TouchableOpacity
           onPress={this.validate}
-          >
-            <Text style={styles.buttonText}>
-                Entrar
-            </Text>
-
-          </TouchableOpacity>
+        >
+          <Text style={styles.buttonText}>
+              Entrar
+          </Text>
+        </TouchableOpacity>
 
         </View>
       );
     }
+  }
+
+
+
 }
 
-  const styles = StyleSheet.create({
-    container: {
-      padding: 20
-    },
-    input: {
-      height: 40,
-      backgroundColor: '#D3D3D3',
-      marginBottom: 10,
-      color: '#2d3436',
-      paddingHorizontal: 10
+const styles = StyleSheet.create({
+  container: {
+    padding: 20
+  },
+  input: {
+    height: 40,
+    backgroundColor: '#D3D3D3',
+    marginBottom: 10,
+    color: '#2d3436',
+    paddingHorizontal: 10
 
-    },
-    buttonContainer: {
-      backgroundColor: '#6c5ce7',
-      paddingVertical: 15,
-    },
-    buttonText: {
-        fontWeight: '800',
-        textAlign: 'center',
-        color: '#FFFFFF',
-      },
-  });
+  },
+  buttonContainer: {
+    backgroundColor: '#6c5ce7',
+    paddingVertical: 15,
+  },
+  buttonText: {
+    fontWeight: '800',
+    textAlign: 'center',
+    color: '#FFFFFF',
+  },
+});

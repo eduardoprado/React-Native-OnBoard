@@ -6,23 +6,30 @@
  * @flow
  */
 
-import React from 'react';
-import {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
-import LoginPage from './src/components/Login/LoginPage';
 import ApolloClient from "apollo-boost";
+import React, { Component } from 'react';
 import { ApolloProvider } from "react-apollo";
+import { createAppContainer, createStackNavigator } from 'react-navigation';
+import LoginPage from './src/components/Login/LoginPage';
+import UserListPage from './src/components/User/UserListPage';
 
 const client = new ApolloClient({
   uri: "https://tq-template-server-sample.herokuapp.com/graphql"
 });
 
 
+const AppStackNavegator = createStackNavigator({
+  LoginPage: { screen: LoginPage },
+  UserListPage: {screen: UserListPage}
+});
+
+const AppContainer = createAppContainer(AppStackNavegator)
+
 export default class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <LoginPage/>
+        <AppContainer/>
       </ApolloProvider>
 
     );
