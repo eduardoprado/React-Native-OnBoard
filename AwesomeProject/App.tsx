@@ -41,6 +41,13 @@ const AppStackNavegator = createStackNavigator({
 
 const AppContainer = createAppContainer(AppStackNavegator)
 
+const AppStackNavegator = createStackNavigator({
+  LoginPage: { screen: LoginPage },
+  UserListPage: {screen: UserListPage}
+});
+
+const AppContainer = createAppContainer(AppStackNavegator)
+
 export default class App extends Component {
   render() {
     return (
