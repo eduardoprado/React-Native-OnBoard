@@ -17,73 +17,75 @@ const mutationToServer = gql`
 `;
 
 export default class LoginForm extends Component<any, {
-    email: string;
-    password: string;
-    emailValdate: boolean;
-    passwordValidate: boolean}>
-    {
-    constructor(props: any){
-        super(props);
-        this.state={
-            email:'',
-            password:'',
-            emailValdate: false,
-            passwordValidate: false
-        }
+  email: string;
+  password: string;
+  emailValdate: boolean;
+  passwordValidate: boolean
+}>
+{
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      emailValdate: false,
+      passwordValidate: false
     }
-    validate = (event:any) =>{
-        let email = this.state.email
-        let password = this.state.password
-        const validemail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.com$/
-        const validPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/
+  }
+  validate = (event: any) => {
+    let email = this.state.email
+    let password = this.state.password
+    const validemail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.com$/
+    const validPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/
 
-        if (!validemail.test(email)){
-            this.setState({
-                emailValdate: false
-            })
-        }
-        else if (validemail.test(email)){
-            this.setState({
-                emailValdate: true
-            })
-        }
-        if (!validPassword.test(password)){
-            this.setState({
-                passwordValidate: false
-            })
-        }
-        else if (validPassword.test(password)){
-            this.setState({
-                passwordValidate: true
-            })
-        }
+    if (!validemail.test(email)) {
+      this.setState({
+        emailValdate: false
+      })
     }
+    else if (validemail.test(email)) {
+      this.setState({
+        emailValdate: true
+      })
+    }
+    if (!validPassword.test(password)) {
+      this.setState({
+        passwordValidate: false
+      })
+    }
+    else if (validPassword.test(password)) {
+      this.setState({
+        passwordValidate: true
+      })
+    }
+  }
 
 
-    render() {
-      const emailValid = this.state.emailValdate
-      const passwordValid = this.state.passwordValidate
+  render() {
+    const emailValid = this.state.emailValdate
+    const passwordValid = this.state.passwordValidate
 
     return (
 
       <View style={styles.container}>
-        <Text>
+        <Text style={{ color: this.state.emailValdate ? '#3CB371' : '#C21807' }}>
           Seu e-mail está {emailValid ? 'correto' : 'inválido'}
         </Text>
 
         <TextInput
+          value={this.state.email}
           onChangeText={(text) => this.setState({ email: text })}
           placeholder="email"
           autoCapitalize="none"
           style={styles.input}
         />
 
-          <Text>
-            Sua senha está {passwordValid ? 'correto':'inválida'}
-          </Text>
+        <Text>
+          Sua senha está {passwordValid ? 'correto' : 'inválida'}
+        </Text>
 
-          <TextInput
-          onChangeText={(text)=>this.setState({password:text})}
+        <TextInput
+          onChangeText={(text) => this.setState({ password: text })}
           placeholder="senha"
           secureTextEntry
           style={styles.input}
@@ -93,17 +95,13 @@ export default class LoginForm extends Component<any, {
           onPress={this.validate}
         >
           <Text style={styles.buttonText}>
-              Entrar
+            Entrar
           </Text>
         </TouchableOpacity>
 
-        </View>
-      );
-    }
+      </View>
+    );
   }
-
-
-
 }
 
 const styles = StyleSheet.create({

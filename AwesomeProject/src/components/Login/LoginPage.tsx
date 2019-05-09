@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import LoginForm, { LoginFormData } from './LoginForm';
-import { gql } from "apollo-boost";
+import { gql, ApolloError } from "apollo-boost";
 import { Mutation } from "react-apollo";
 import { AUTH_KEY } from '../../constants';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -16,10 +16,6 @@ const mutationToServer = gql`
       email: $email
       password: $password
     }){
-    user{
-      id
-      birthDate
-      }
     token
     }
   }
@@ -40,7 +36,7 @@ export default class LoginPage extends Component<any, undefined> {
           onCompleted={this.handleLoginSuccess}
         >
 
-          {(mutationFunction, { data, loading, error }) => {
+          {(mutationFunction, { loading, error }) => {
 
             const handleSubmit = (loginFormData: LoginFormData) => {
               const { email, password } = loginFormData;
@@ -54,11 +50,16 @@ export default class LoginPage extends Component<any, undefined> {
             };
 
             if (loading) {
-              return <LoginLoadingPage/>
-            } if (error) {
-              return <Text>Erro: {error.message}</Text>
+              return <LoginLoadingPage />
             }
-            return <LoginForm onSubmit={handleSubmit} />
+            return (
+              <>
+                <>
+                {error && <Text>Erro: {error!.message} </Text>}
+                </>
+                <LoginForm onSubmit={handleSubmit} />
+              </>
+            )
           }}
         </Mutation>
       </View>
@@ -66,9 +67,10 @@ export default class LoginPage extends Component<any, undefined> {
   }
 
   private handleLoginSuccess = (data: any) => {
-    const { token } = data.Login
-    AsyncStorage.setItem(AUTH_KEY, token);
-    this.props.navigation.navigate('UserListPage')
+    const { token } = data.Login;
+    AsyncStorage.setItem(AUTH_KEY, token)
+      .then(() => this.props.navigation.navigate('UserListPage'));
+
   }
 
 }
