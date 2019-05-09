@@ -14,6 +14,7 @@ import { ApolloProvider } from "react-apollo";
 import { createAppContainer, createStackNavigator } from 'react-navigation';
 import LoginPage from './src/components/Login/LoginPage';
 import UserListPage from './src/components/User/UserListPage';
+import AddUserPage from './src/components/User/AddUserPage';
 import { AUTH_KEY } from "./src/constants";
 
 
@@ -34,7 +35,8 @@ const client = new ApolloClient({
 
 const AppStackNavegator = createStackNavigator({
   LoginPage: { screen: LoginPage },
-  UserListPage: { screen: UserListPage }
+  UserListPage: { screen: UserListPage },
+  AddUserPage: {screen: AddUserPage}
 });
 
 const AppContainer = createAppContainer(AppStackNavegator)

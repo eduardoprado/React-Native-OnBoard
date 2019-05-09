@@ -1,8 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
-import { Platform, StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import {  StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import LoginForm, { LoginFormData } from './LoginForm';
-import { gql, ApolloError } from "apollo-boost";
+import { gql} from "apollo-boost";
 import { Mutation } from "react-apollo";
 import { AUTH_KEY } from '../../constants';
 import AsyncStorage from '@react-native-community/async-storage';

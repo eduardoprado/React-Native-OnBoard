@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import React, { Component } from 'react';
 import { Query } from "react-apollo";
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, Button } from 'react-native';
 import LoginLoadingPage from '../Login/LoginLoadingPage';
 
 
@@ -28,7 +28,7 @@ class FlatListItem extends Component<any, {
       }
       }
       >
-        <Text style={styles.name}>Nome: {this.props.item.name}</Text>
+        <Text style={styles.name}>{this.props.item.name}</Text>
         <Text style={styles.email}>email: {this.props.item.email}</Text>
       </View>
     )
@@ -38,6 +38,7 @@ class FlatListItem extends Component<any, {
 
 export default class UserListPage extends Component<any, undefined>{
   render() {
+    const {navigate} = this.props.navigation;
     return (
       <Query query={GET_USERS}>
         {({ loading, error, data }) => {
@@ -47,6 +48,8 @@ export default class UserListPage extends Component<any, undefined>{
             return <Text>Erro: {error.message} </Text>
           } return (
             <View style={styles.container}>
+              <Button onPress={() => navigate('AddUserPage')}
+                title="Adicionar novo usuário" />
               <FlatList
                 data={data.Users.nodes}
                 renderItem={({ item, index }) => {
@@ -61,64 +64,6 @@ export default class UserListPage extends Component<any, undefined>{
     );
   }
 }
-
-const list = [
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuhKKn1",
-    name: 'Amy Farha',
-    email: 'amyfarh@gmail.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuhKKn2",
-    name: 'Chris Jackson',
-    email: 'chrisbjackson22@icloud.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuhKKn3",
-    name: 'André',
-    email: 'andrelsfarao@voo.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuhKKn4",
-    name: 'Beto',
-    email: 'betoG@gmail.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuhKKn5",
-    name: 'Eduardo',
-    email: 'eduardo.prado@taqtile.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuhKKn6",
-    name: 'Marcos',
-    email: 'marcos@taqtile.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuhKKn7",
-    name: 'Tiba',
-    email: 'tiba@taqtile.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuhKKn8",
-    name: 'Pedro',
-    email: 'pgottsch@mac.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuhKKn9",
-    name: 'Charles Settelman',
-    email: 'choset@yahoo.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuh21n1",
-    name: 'Jim Freedman',
-    email: 'jfreedma@outlook.com'
-  },
-  {
-    key: "O6W28kQOJPMKtp3LV8oWBo3VCsuh01n1",
-    name: 'Alan',
-    email: 'alan@taqtile.com'
-  }
-]
 
 const styles = StyleSheet.create({
   container: {
