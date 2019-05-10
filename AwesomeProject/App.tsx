@@ -16,6 +16,8 @@ import LoginPage from './src/components/Login/LoginPage';
 import UserListPage from './src/components/User/UserListPage';
 import AddUserPage from './src/components/User/AddUserPage';
 import { AUTH_KEY } from "./src/constants";
+import FlatListItem from './src/components/User/FlatListItem';
+import UserDetailsPage from './src/components/User/UserDetailsPage';
 
 
 const httpLink = new HttpLink({
@@ -36,7 +38,9 @@ const client = new ApolloClient({
 const AppStackNavegator = createStackNavigator({
   LoginPage: { screen: LoginPage },
   UserListPage: { screen: UserListPage },
-  AddUserPage: {screen: AddUserPage}
+  AddUserPage: {screen: AddUserPage},
+  FlatListItem: {screen: FlatListItem},
+  UserDetailsPage: {screen: UserDetailsPage}
 });
 
 const AppContainer = createAppContainer(AppStackNavegator)

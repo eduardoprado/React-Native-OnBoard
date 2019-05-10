@@ -3,12 +3,14 @@ import React, { Component } from 'react';
 import { Query } from "react-apollo";
 import { FlatList, StyleSheet, Text, View, Button } from 'react-native';
 import LoginLoadingPage from '../Login/LoginLoadingPage';
+import FlatListItem from './FlatListItem';
 
 
 const GET_USERS = gql`
   query Users{
-    Users{
+    Users(limit:100){
       nodes {
+        id
         name
         email
       }
@@ -16,29 +18,11 @@ const GET_USERS = gql`
 }
 `
 
-class FlatListItem extends Component<any, {
-  item: any
-  index: number
-}> {
-  render() {
-    return (
-      <View style={{
-        flex: 1,
-        backgroundColor: this.props.index % 2 == 0 ? '#e6e6ea' : '#f4f4f8'
-      }
-      }
-      >
-        <Text style={styles.name}>{this.props.item.name}</Text>
-        <Text style={styles.email}>email: {this.props.item.email}</Text>
-      </View>
-    )
-  }
-}
 
 
 export default class UserListPage extends Component<any, undefined>{
   render() {
-    const {navigate} = this.props.navigation;
+    const { navigate } = this.props.navigation;
     return (
       <Query query={GET_USERS}>
         {({ loading, error, data }) => {
@@ -53,7 +37,7 @@ export default class UserListPage extends Component<any, undefined>{
               <FlatList
                 data={data.Users.nodes}
                 renderItem={({ item, index }) => {
-                  return (<FlatListItem item={item} index={index} />);
+                  return (<FlatListItem item={item} index={index} navigate={navigate} />);
                 }}
               >
               </FlatList>
@@ -77,5 +61,19 @@ const styles = StyleSheet.create({
   email: {
     fontSize: 14,
     padding: 10
+  },
+  buttontext:{
+    fontSize: 14,
+    padding: 5,
+    color: 'white'
+  },
+  button:{
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  touchable:
+  {backgroundColor: "skyblue",
+  borderRadius: 10
   }
 });
