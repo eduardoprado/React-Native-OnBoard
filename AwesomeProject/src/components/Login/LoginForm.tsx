@@ -1,26 +1,24 @@
 import { gql } from "apollo-boost";
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import validation from '../validation';
 
-const mutationToServer = gql`
-  mutation LoginOperation {
-    Login (data:{
-      email: "admin@taqtile.com"
-      password: "1111"
-    }){
-    user{
-      id
-      birthDate
-      }
-    }
-  }
-`;
+export interface LoginFormData {
+  email: string;
+  password: string;
+}
+
+export interface LoginFormProps {
+  onSubmit: (data: LoginFormData) => void;
+}
+
 
 export default class LoginForm extends Component<any, {
   email: string;
   password: string;
   emailValdate: boolean;
-  passwordValidate: boolean
+  passwordValidate: boolean;
+  buttonPressed: boolean;
 }>
 {
   constructor(props: any) {
@@ -29,7 +27,8 @@ export default class LoginForm extends Component<any, {
       email: '',
       password: '',
       emailValdate: false,
-      passwordValidate: false
+      passwordValidate: false,
+      buttonPressed: false
     }
   }
   validate = (event: any) => {
@@ -68,9 +67,8 @@ export default class LoginForm extends Component<any, {
     return (
 
       <View style={styles.container}>
-        <Text style={{ color: this.state.emailValdate ? '#3CB371' : '#C21807' }}>
-          Seu e-mail está {emailValid ? 'correto' : 'inválido'}
-        </Text>
+
+        {this.ErrorText(this.state.emailValdate, this.state.buttonPressed, 'email')}
 
         <TextInput
           value={this.state.email}
@@ -80,9 +78,7 @@ export default class LoginForm extends Component<any, {
           style={styles.input}
         />
 
-        <Text>
-          Sua senha está {passwordValid ? 'correto' : 'inválida'}
-        </Text>
+        {this.ErrorText(this.state.passwordValidate, this.state.buttonPressed, 'senha')}
 
         <TextInput
           onChangeText={(text) => this.setState({ password: text })}
@@ -91,18 +87,57 @@ export default class LoginForm extends Component<any, {
           style={styles.input}
         />
 
-        <TouchableOpacity
-          onPress={this.validate}
-        >
-          <Text style={styles.buttonText}>
-            Entrar
-          </Text>
-        </TouchableOpacity>
-
+        <Button
+          onPress={this.validateLogin}
+          title="Entrar"
+        />
       </View>
     );
   }
+
+  private validateLogin = () => {
+    const {
+      email,
+      password,
+    } = this.state;
+
+    let emailValidate = validation('email', email) ? true : false
+    let passwordValidate = validation('password', password) ? true : false
+
+    if (emailValidate && passwordValidate) {
+      this.props.onSubmit({
+        email,
+        password,
+      });
+      return;
+    }
+    this.setState({ emailValdate: emailValidate, passwordValidate: passwordValidate, buttonPressed: true })
+  }
+
+  private ErrorText(state: boolean, buttonState: boolean, text: string) {
+    if (!state&&buttonState) {
+      if (text == 'senha') {
+        return (
+          <Text style={{ color: '#C21807' }}>
+            Senha inválida, sua senha contém 7 ou mais caracteres entre letras e números
+          </Text>
+        );
+      }
+      else if (text == 'email') {
+        return (
+          <Text style={{ color: '#C21807' }}>
+            Seu email está incorreto, por favor use o formato ***@***.com
+          </Text>
+        );
+      }
+    }
+  }
+
+
 }
+
+
+
 
 const styles = StyleSheet.create({
   container: {

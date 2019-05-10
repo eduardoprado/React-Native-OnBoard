@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
+import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import validation from '../validation';
 
 export interface AddUserPageFormData {
@@ -29,6 +29,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
   birthDateValidate: boolean;
   nameValidate: boolean;
   roleValidate: boolean;
+  buttonPressed: boolean;
 }>{
   constructor(props: any) {
     super(props);
@@ -45,15 +46,14 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
       birthDateValidate: false,
       nameValidate: false,
       roleValidate: false,
+      buttonPressed: false
     }
   }
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
-        <Text style={{ color: this.state.nameValidate ? '#3CB371' : '#C21807' }}>
-          Seu nome está {this.state.nameValidate ? 'correto' : 'inválida'}
-        </Text>
+        {this.ErrorText(this.state.nameValidate, this.state.buttonPressed, 'name')}
 
         <TextInput
           value={this.state.name}
@@ -62,9 +62,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
           onChangeText={(text) => this.setState({ name: text })}>
         </TextInput>
 
-        <Text style={{ color: this.state.emailValidate ? '#3CB371' : '#C21807' }}>
-          Seu email está {this.state.emailValidate ? 'correto' : 'inválida'}
-        </Text>
+        {this.ErrorText(this.state.emailValidate, this.state.buttonPressed, 'email')}
 
         <TextInput
           value={this.state.email}
@@ -74,9 +72,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
           onChangeText={(text) => this.setState({ email: text })}>
         </TextInput>
 
-        <Text style={{ color: this.state.cpfValidate ? '#3CB371' : '#C21807' }}>
-          Seu CPF está {this.state.cpfValidate ? 'correto' : 'inválida'}
-        </Text>
+        {this.ErrorText(this.state.cpfValidate, this.state.buttonPressed, 'cpf')}
 
         <TextInput
           value={this.state.cpf}
@@ -86,9 +82,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
           onChangeText={(text) => this.setState({ cpf: text })}>
         </TextInput>
 
-        <Text style={{ color: this.state.birthDateValidate ? '#3CB371' : '#C21807' }}>
-          Seu data de nascimento está {this.state.birthDateValidate ? 'correto' : 'inválida'}
-        </Text>
+        {this.ErrorText(this.state.birthDateValidate, this.state.buttonPressed, 'birthDate')}
 
         <TextInput
           value={this.state.birthDate}
@@ -98,9 +92,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
           onChangeText={(text) => this.setState({ birthDate: text })}>
         </TextInput>
 
-        <Text style={{ color: this.state.passwordValidate ? '#3CB371' : '#C21807' }}>
-          Seu função está {this.state.passwordValidate ? 'correto' : 'inválida'}
-        </Text>
+        {this.ErrorText(this.state.passwordValidate, this.state.buttonPressed, 'senha')}
 
         <TextInput
           value={this.state.password}
@@ -110,9 +102,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
           onChangeText={(text) => this.setState({ password: text })}>
         </TextInput>
 
-        <Text style={{ color: this.state.roleValidate ? '#3CB371' : '#C21807' }}>
-          Seu função está {this.state.roleValidate ? 'correto' : 'inválida'}
-        </Text>
+        {this.ErrorText(this.state.roleValidate, this.state.buttonPressed, 'role')}
 
         <TextInput
           value={this.state.role}
@@ -127,55 +117,27 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
           onPress={this.validateUser}
           title="Entrar"
         />
-      </View>
+      </ScrollView>
     )
   }
 
   private validateUser = () => {
     const {
       email,
-      emailValidate,
       password,
-      passwordValidate,
       cpf,
-      cpfValidate,
       birthDate,
-      birthDateValidate,
       role,
-      roleValidate,
       name,
-      nameValidate
     } = this.state
-    if (validation('name', name)) {
-      this.setState({
-        nameValidate: true
-      })
-    }
-    if (validation('email', email)) {
-      this.setState({
-        emailValidate: true
-      })
-    }
-    if (validation('cpf', cpf)) {
-      this.setState({
-        cpfValidate: true
-      })
-    }
-    if (validation('birthDate', birthDate)) {
-      this.setState({
-        birthDateValidate: true
-      })
-    }
-    if (validation('role', role)) {
-      this.setState({
-        roleValidate: true
-      })
-    }
-    if (validation('password', password)) {
-      this.setState({
-        passwordValidate: true
-      })
-    }
+
+    let emailValidate = validation('email', email) ? true : false
+    let passwordValidate = validation('password', password) ? true : false
+    let cpfValidate = validation('cpf', cpf) ? true : false
+    let birthDateValidate = validation('birthDate', birthDate) ? true : false
+    let roleValidate = validation('role', role) ? true : false
+    let nameValidate = validation('name', name) ? true : false
+
     if (nameValidate && passwordValidate && cpfValidate && birthDateValidate && emailValidate && roleValidate) {
       this.props.onSubmit({
         email,
@@ -183,12 +145,73 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
         cpf,
         birthDate,
         name,
-        role
-      });
+        role});
       return;
     }
+
+    this.setState({
+      emailValidate: emailValidate,
+      passwordValidate: passwordValidate,
+      cpfValidate: cpfValidate,
+      birthDateValidate: birthDateValidate,
+      nameValidate: nameValidate,
+      roleValidate: roleValidate,
+      buttonPressed: true
+    })
   }
+
+  private ErrorText(state: boolean, buttonState: boolean, text: string) {
+    if (!state&&buttonState) {
+      if (text == 'senha') {
+        return (
+          <Text style={{ color: '#C21807' }}>
+            Senha inválida, sua tem que conter 7 ou mais caracteres entre letras e números
+          </Text>
+        );
+      }
+      if (text == 'email') {
+        return (
+          <Text style={{ color: '#C21807' }}>
+            Seu email está inválido, por favor use o formato ***@***.com
+          </Text>
+        );
+      }
+      if (text == 'birthDate') {
+        return (
+          <Text style={{ color: '#C21807' }}>
+            Data incorreta, use o padrão YYYY-MM-DD
+          </Text>
+        );
+      }
+      if (text == 'cpf') {
+        return (
+          <Text style={{ color: '#C21807' }}>
+            CPF inválido
+          </Text>
+        );
+      }
+      if (text == 'name') {
+        return (
+          <Text style={{ color: '#C21807' }}>
+            Nome inválido
+          </Text>
+        );
+      }
+      if (text == 'role') {
+        return (
+          <Text style={{ color: '#C21807' }}>
+            Função inváilida, pode ser apenas user ou admin
+          </Text>
+        );
+      }
+    }
+  }
+
+
+
 }
+
+
 
 
 const styles = StyleSheet.create({
