@@ -67,26 +67,24 @@ export default class AddUserPage extends Component<any, undefined>{
   }
 
   private handleCreateSuccess = () => {
-    console.warn('mutation completed')
     this.props.navigation.navigate('UserListPage')
   }
 }
 
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 22,
+    marginTop: 10,
   },
   name: {
-    fontSize: 18,
+    fontSize: 16,
     padding: 10,
     borderBottomColor: '#DCDCDC',
     borderBottomWidth: 1,
   },
   header: {
-    fontSize: 28,
+    fontSize: 22,
     padding: 15,
     textAlign: 'center',
     color: '#0AE',

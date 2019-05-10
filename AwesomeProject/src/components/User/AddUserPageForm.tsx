@@ -33,12 +33,12 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
   constructor(props: any) {
     super(props);
     this.state = {
-      email: 'eduardo.prado@taqtile.com',
-      password: '1111',
-      cpf: '42412590818',
-      birthDate: '1997-10-08',
-      name: 'Eduardo Prado',
-      role: 'user',
+      email: '',
+      password: '',
+      cpf: '',
+      birthDate: '',
+      name: '',
+      role: '',
       emailValidate: false,
       passwordValidate: false,
       cpfValidate: false,
@@ -97,11 +97,11 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
           style={styles.name}
           onChangeText={(text) => this.setState({ birthDate: text })}>
         </TextInput>
-        {!this.state.password &&
-          <Text style={{ color: '#C21807' }}>
-            Você deve inserir uma senha válida
-          </Text>
-        }
+
+        <Text style={{ color: this.state.passwordValidate ? '#3CB371' : '#C21807' }}>
+          Seu função está {this.state.passwordValidate ? 'correto' : 'inválida'}
+        </Text>
+
         <TextInput
           value={this.state.password}
           placeholder="senha (opcional)"
@@ -132,7 +132,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
   }
 
   private validateUser = () => {
-    const{
+    const {
       email,
       emailValidate,
       password,
@@ -166,7 +166,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
         birthDateValidate: true
       })
     }
-    if (validation('role',role)) {
+    if (validation('role', role)) {
       this.setState({
         roleValidate: true
       })
@@ -176,7 +176,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, {
         passwordValidate: true
       })
     }
-    if (nameValidate&&passwordValidate&&cpfValidate&&birthDateValidate&&emailValidate&&roleValidate){
+    if (nameValidate && passwordValidate && cpfValidate && birthDateValidate && emailValidate && roleValidate) {
       this.props.onSubmit({
         email,
         password,
