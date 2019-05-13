@@ -2,6 +2,8 @@ import { gql } from "apollo-boost";
 import React, { Component } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import validation from '../validation';
+import { StyledTouchableOpacity, ButtonText, FormView, FormInput } from '../UXcomponents/style';
+import Form from './Form'
 
 export interface LoginFormData {
   email: string;
@@ -66,33 +68,39 @@ export default class LoginForm extends Component<any, {
 
     return (
 
-      <View style={styles.container}>
+      <FormView >
 
-        {this.ErrorText(this.state.emailValdate, this.state.buttonPressed, 'email')}
+        <Form
+          onChange={this.changeStateEmail}
+          header='email'
+          buttonState={this.state.buttonPressed}
+          avaliationState={this.state.emailValdate} />
 
-        <TextInput
-          value={this.state.email}
-          onChangeText={(text) => this.setState({ email: text })}
-          placeholder="email"
-          autoCapitalize="none"
-          style={styles.input}
-        />
+        <Form
+          onChange={this.changeStatePassword}
+          header='password'
+          buttonState={this.state.buttonPressed}
+          avaliationState={this.state.passwordValidate} />
 
-        {this.ErrorText(this.state.passwordValidate, this.state.buttonPressed, 'senha')}
 
-        <TextInput
-          onChangeText={(text) => this.setState({ password: text })}
-          placeholder="senha"
-          secureTextEntry
-          style={styles.input}
-        />
+        <StyledTouchableOpacity
+          onPress={this.validateLogin}>
+          <ButtonText> Entrar </ButtonText>
+        </StyledTouchableOpacity>
 
-        <Button
-          onPress={this.validateLogin}
-          title="Entrar"
-        />
-      </View>
+      </FormView>
     );
+  }
+  private changeStateEmail = (emailText: string) => {
+    this.setState({
+      email: emailText
+    })
+  }
+
+  private changeStatePassword = (passwordText: string) => {
+    this.setState({
+      password: passwordText
+    })
   }
 
   private validateLogin = () => {
@@ -105,6 +113,7 @@ export default class LoginForm extends Component<any, {
     let passwordValidate = validation('password', password) ? true : false
 
     if (emailValidate && passwordValidate) {
+      this.setState({ emailValdate: emailValidate, passwordValidate: passwordValidate, buttonPressed: true })
       this.props.onSubmit({
         email,
         password,
@@ -115,7 +124,7 @@ export default class LoginForm extends Component<any, {
   }
 
   private ErrorText(state: boolean, buttonState: boolean, text: string) {
-    if (!state&&buttonState) {
+    if (!state && buttonState) {
       if (text == 'senha') {
         return (
           <Text style={{ color: '#C21807' }}>
