@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { isTemplateElement } from '@babel/types';
+import { SmallButtonText, SmallStyledTouchableOpacity } from '../../UXcomponents/style';
+import SmallStyledButton from '../../UXcomponents/SmallStyledButton';
 
 export default class FlatListItem extends Component<{
   item: any;
@@ -16,19 +18,13 @@ export default class FlatListItem extends Component<{
 
       <View style={stripeStyle(this.props.index)}
       >
-        <View>
-          <Text style={styles.name}>{name}</Text>
-          <Text style={styles.email}>email: {email}</Text>
-        </View>
-
-        <View style={styles.button}>
         <TouchableOpacity
-        onPress={() => this.props.navigate('UserDetailsPage',  {state: { id }})}
-        style={styles.touchable}>
-            <Text style={styles.buttontext}>Detalhes do usuário</Text>
+          onPress={() => this.props.navigate('UserDetailsPage', { state: { id } })}>
+          <Text style={styles.name}> {name}</Text>
+          <Text style={styles.email}>email: {email}</Text>
         </TouchableOpacity>
-        </View>
       </View>
+
     )
   }
 }
@@ -36,7 +32,7 @@ export default class FlatListItem extends Component<{
 const stripeStyle = (i: number) => ({
   flex: 1,
   backgroundColor: i % 2 == 0 ? '#e6e6ea' : '#f4f4f8',
-  flexDirection: 'row',
+  flexDirection: 'column',
   justifyContent: 'space-between'
 }) as any;
 
@@ -53,18 +49,19 @@ const styles = StyleSheet.create({
     fontSize: 14,
     padding: 10
   },
-  buttontext:{
+  buttontext: {
     fontSize: 14,
     padding: 5,
     color: 'white'
   },
-  button:{
+  button: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
   touchable:
-  {backgroundColor: "skyblue",
-  borderRadius: 10
+  {
+    backgroundColor: "skyblue",
+    borderRadius: 10
   }
 });

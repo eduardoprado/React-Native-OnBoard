@@ -8,6 +8,7 @@ export interface FormProps{
   header: string;
   buttonState: boolean;
   avaliationState: boolean;
+  validatorText: string;
   onChange: (text: string)=>void;
 }
 
@@ -16,24 +17,33 @@ export interface FormState{
 }
 
 export default class Form extends Component<FormProps,FormState>{
+
   render() {
     return (
       <View>
-        <StyledText> {this.props.header}: </StyledText>
+        <StyledText> {this.props.header} </StyledText>
 
         <FormInput
           onChangeText = {(text)=> this.handleChange(text)}
           placeholder="insira aqui"
           autoCapitalize="none"
+          secureTextEntry={this.testPassword(this.props.validatorText)}
         />
 
-        <ErrorCaption header= {this.props.header} buttonState={this.props.buttonState} avaliationState={this.props.avaliationState} />
+        <ErrorCaption avaliationText= {this.props.validatorText} buttonState={this.props.buttonState} avaliationState={this.props.avaliationState} />
       </View>
     );
   }
 
   private handleChange = (text: string)=>{
-
     this.props.onChange(text)
+  }
+
+  private testPassword = (text:string)=>{
+    let isPassword = false
+    if (text=='password'){
+      isPassword=true
+    }
+    return isPassword
   }
 }

@@ -4,7 +4,7 @@ import validation from '../validation';
 import { ErrorText } from '../UXcomponents/style';
 
 export default class ErrorCaption extends Component<{
-  header: string;
+  avaliationText: string;
   buttonState: boolean;
   avaliationState: boolean;
 },{}>{
@@ -12,7 +12,7 @@ export default class ErrorCaption extends Component<{
 
     return(
       <>
-      {this.ErrorText(this.props.avaliationState, this.props.buttonState, this.props.header)}
+      {this.ErrorText(this.props.avaliationState, this.props.buttonState, this.props.avaliationText)}
       </>
     );
   }

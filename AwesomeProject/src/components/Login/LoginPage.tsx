@@ -1,13 +1,13 @@
 import React from 'react';
 import { Component } from 'react';
-import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Image } from 'react-native';
 import LoginForm, { LoginFormData } from './LoginForm';
 import { gql } from "apollo-boost";
 import { Mutation } from "react-apollo";
-import { AUTH_KEY } from '../../constants';
+import { AUTH_KEY } from '../constants';
 import AsyncStorage from '@react-native-community/async-storage';
 import LoginLoadingPage from './LoginLoadingPage';
-import { StyledHeaderText, StyledView, ErrorText } from '../UXcomponents/style';
+import { StyledHeaderText, StyledView, ErrorText, TaqtileImage } from '../UXcomponents/style';
 
 
 
@@ -29,6 +29,10 @@ export default class LoginPage extends Component<any, undefined> {
       <StyledView>
         <SafeAreaView>
           <StyledHeaderText> Bem vindo(a) Taqtile!</StyledHeaderText>
+          <View style={{alignItems:"center"}}>
+            <TaqtileImage source={require('../../Taqtile_logo.png')} />
+          </View>
+
           <Mutation
             mutation={mutationToServer}
             onCompleted={this.handleLoginSuccess}
@@ -49,7 +53,7 @@ export default class LoginPage extends Component<any, undefined> {
               return (
                 <>
                   <>
-                    {loading && <LoginLoadingPage/>}
+                    {loading && <LoginLoadingPage />}
                     {error && <ErrorText>Erro: {error!.message} </ErrorText>}
                   </>
                   <LoginForm onSubmit={handleSubmit} />

@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 import validation from '../validation';
 import { StyledTouchableOpacity, ButtonText, FormView, FormInput } from '../UXcomponents/style';
-import Form from './Form'
+import Form from '../Form/Form'
+import StyledButton from '../UXcomponents/StyledButton';
 
 export interface LoginFormData {
   email: string;
@@ -14,16 +15,17 @@ export interface LoginFormProps {
   onSubmit: (data: LoginFormData) => void;
 }
 
-
-export default class LoginForm extends Component<any, {
+export interface LoginFormState{
   email: string;
   password: string;
   emailValdate: boolean;
   passwordValidate: boolean;
   buttonPressed: boolean;
-}>
-{
-  constructor(props: any) {
+}
+
+export default class LoginForm extends Component<LoginFormProps, LoginFormState>{
+
+  constructor(props: LoginFormProps) {
     super(props);
     this.state = {
       email: '',
@@ -72,21 +74,22 @@ export default class LoginForm extends Component<any, {
 
         <Form
           onChange={this.changeStateEmail}
-          header='email'
+          header='Email:'
           buttonState={this.state.buttonPressed}
-          avaliationState={this.state.emailValdate} />
+          avaliationState={this.state.emailValdate}
+          validatorText='email' />
 
         <Form
           onChange={this.changeStatePassword}
-          header='password'
+          header='Senha:'
+          validatorText='password'
           buttonState={this.state.buttonPressed}
           avaliationState={this.state.passwordValidate} />
 
 
-        <StyledTouchableOpacity
-          onPress={this.validateLogin}>
-          <ButtonText> Entrar </ButtonText>
-        </StyledTouchableOpacity>
+        <StyledButton
+          onPress={this.validateLogin}
+          text="Entrar" />
 
       </FormView>
     );
@@ -122,27 +125,6 @@ export default class LoginForm extends Component<any, {
     }
     this.setState({ emailValdate: emailValidate, passwordValidate: passwordValidate, buttonPressed: true })
   }
-
-  private ErrorText(state: boolean, buttonState: boolean, text: string) {
-    if (!state && buttonState) {
-      if (text == 'senha') {
-        return (
-          <Text style={{ color: '#C21807' }}>
-            Senha inválida, sua senha contém 7 ou mais caracteres entre letras e números
-          </Text>
-        );
-      }
-      else if (text == 'email') {
-        return (
-          <Text style={{ color: '#C21807' }}>
-            Seu email está incorreto, por favor use o formato ***@***.com
-          </Text>
-        );
-      }
-    }
-  }
-
-
 }
 
 

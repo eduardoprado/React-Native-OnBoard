@@ -12,12 +12,12 @@ import { setContext } from "apollo-link-context";
 import React, { Component } from 'react';
 import { ApolloProvider } from "react-apollo";
 import { createAppContainer, createStackNavigator } from 'react-navigation';
-import LoginPage from './src/components/Login/LoginPage';
-import UserListPage from './src/components/User/UserListPage';
-import AddUserPage from './src/components/User/AddUserPage';
-import { AUTH_KEY } from "./src/constants";
-import FlatListItem from './src/components/User/FlatListItem';
-import UserDetailsPage from './src/components/User/UserDetailsPage';
+import LoginPage from '../components/Login/LoginPage';
+import UserListPage from '../components/User/UserList/UserListPage';
+import AddUserPage from '../components/User/AddUser/AddUserPage';
+import { AUTH_KEY } from "../components/constants";
+import FlatListItem from '../components/User/UserList/FlatListItem';
+import UserDetailsPage from '../components/User/UserDetails/UserDetailsPage';
 
 
 const httpLink = new HttpLink({
