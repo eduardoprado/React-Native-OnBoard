@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { TextInput, ScrollView } from 'react-native-gesture-handler';
 import validation from '../../validation';
-import StyledButton from '../../UXcomponents/StyledButton';
+import StyledButton from '../../UXcomponents/Buttons/StyledButton';
 import Form from '../../Form/Form';
-import AddUserButton from '../../UXcomponents/AddUserButton';
+import AddUserButton from '../../UXcomponents/Buttons/AddUserButton';
 
 export interface AddUserPageFormData {
   email: string;
@@ -84,21 +84,21 @@ export default class AddUserPageForm extends Component<AddUserFormProps, AddUser
         header='Data de nascimento'
         validatorText= 'birthDate'
         buttonState={this.state.buttonPressed}
-        avaliationState={this.state.nameValidate}/>
+        avaliationState={this.state.birthDateValidate}/>
 
         <Form
         onChange={this.changeStatePassword}
         header='Senha'
         validatorText= 'password'
         buttonState={this.state.buttonPressed}
-        avaliationState={this.state.nameValidate}/>
+        avaliationState={this.state.passwordValidate}/>
 
         <Form
         onChange={this.changeStateRole}
         header='Função'
         validatorText= 'role'
         buttonState={this.state.buttonPressed}
-        avaliationState={this.state.nameValidate}/>
+        avaliationState={this.state.roleValidate}/>
 
 
         <AddUserButton

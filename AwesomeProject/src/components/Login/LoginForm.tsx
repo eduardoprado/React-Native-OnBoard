@@ -1,10 +1,9 @@
-import { gql } from "apollo-boost";
 import React, { Component } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import Form from '../Form/Form';
+import StyledButton from '../UXcomponents/Buttons/StyledButton';
+import { PageFormView } from '../UXcomponents/Form/PageFormView';
 import validation from '../validation';
-import { StyledTouchableOpacity, ButtonText, FormView, FormInput } from '../UXcomponents/style';
-import Form from '../Form/Form'
-import StyledButton from '../UXcomponents/StyledButton';
 
 export interface LoginFormData {
   email: string;
@@ -70,7 +69,7 @@ export default class LoginForm extends Component<LoginFormProps, LoginFormState>
 
     return (
 
-      <FormView >
+      <PageFormView>
 
         <Form
           onChange={this.changeStateEmail}
@@ -91,7 +90,7 @@ export default class LoginForm extends Component<LoginFormProps, LoginFormState>
           onPress={this.validateLogin}
           text="Entrar" />
 
-      </FormView>
+      </PageFormView>
     );
   }
   private changeStateEmail = (emailText: string) => {

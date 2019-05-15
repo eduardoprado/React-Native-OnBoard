@@ -4,8 +4,8 @@ import { Query } from "react-apollo";
 import { FlatList, StyleSheet, Text, View, Button } from 'react-native';
 import LoginLoadingPage from '../../Login/LoginLoadingPage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import StyledButton from '../../UXcomponents/StyledButton';
-import { StyleView } from '../../UXcomponents/style';
+import StyledButton from '../../UXcomponents/Buttons/StyledButton';
+import { StyleView, ErrorText } from '../../UXcomponents/style';
 
 const GET_INFO = gql`
   query Users($id: Int!){
@@ -30,7 +30,7 @@ export default class UserDetailsPage extends Component<any, {}>{
           if (loading) {
             return <LoginLoadingPage />
           } if (error) {
-            return <Text>Erro: {error.message} </Text>
+            return <ErrorText> {error.message} </ErrorText>
           } return (
             <StyleView>
 

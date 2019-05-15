@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import validation from '../validation';
-import { StyledTouchableOpacity, ButtonText, FormView, FormInput, StyledText } from '../UXcomponents/style';
-import { View } from 'react-native';
+import { StyledText } from '../UXcomponents/style';
 import ErrorCaption from './ErrorCaption'
+import {FormInput} from '../UXcomponents/Form/FormInput'
+import {FormView} from '../UXcomponents/Form/FormView'
 
 export interface FormProps{
   header: string;
@@ -20,7 +20,8 @@ export default class Form extends Component<FormProps,FormState>{
 
   render() {
     return (
-      <View>
+
+      <FormView>
         <StyledText> {this.props.header} </StyledText>
 
         <FormInput
@@ -31,7 +32,7 @@ export default class Form extends Component<FormProps,FormState>{
         />
 
         <ErrorCaption avaliationText= {this.props.validatorText} buttonState={this.props.buttonState} avaliationState={this.props.avaliationState} />
-      </View>
+      </FormView>
     );
   }
 

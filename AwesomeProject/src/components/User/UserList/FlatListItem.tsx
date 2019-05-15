@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { isTemplateElement } from '@babel/types';
-import { SmallButtonText, SmallStyledTouchableOpacity } from '../../UXcomponents/style';
-import SmallStyledButton from '../../UXcomponents/SmallStyledButton';
+
+
 
 export default class FlatListItem extends Component<{
   item: any;

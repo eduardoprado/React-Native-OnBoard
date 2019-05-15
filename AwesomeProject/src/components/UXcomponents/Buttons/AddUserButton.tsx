@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, StyleSheet, Text } from 'react-native';
+import { ButtonText } from '../style';
 
 export interface ButtonProps {
   onPress: (e:any)=>void
@@ -21,21 +22,19 @@ export default class AddUserButton extends Component<ButtonProps, ButtonState>{
         onPress={this.props.onPress}
         style={styles.touchable}>
 
-        <Text style={styles.buttonText}> {this.props.text}</Text>
+        <ButtonText> {this.props.text}</ButtonText>
 
       </TouchableOpacity>
     );
   }
-
 }
 
 const styles = StyleSheet.create({
   touchable:{
     backgroundColor: '#2980B9',
     borderRadius: 20,
-    padding: 10
+    padding: 10,
+    margin: 10,
+    height: 44,
   },
-  buttonText:{
-    color: '#fff'
-  }
 });

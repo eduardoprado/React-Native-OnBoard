@@ -30,7 +30,7 @@ export default class LoginPage extends Component<any, undefined> {
         <SafeAreaView>
           <StyledHeaderText> Bem vindo(a) Taqtile!</StyledHeaderText>
           <View style={{alignItems:"center"}}>
-            <TaqtileImage source={require('../../Taqtile_logo.png')} />
+            <TaqtileImage source={require('../../images/Taqtile_logo.png')} />
           </View>
 
           <Mutation

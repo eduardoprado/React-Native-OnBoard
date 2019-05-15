@@ -5,7 +5,7 @@ import { FlatList, StyleSheet, Text, View, Button, ScrollView, ActivityIndicator
 import LoginLoadingPage from '../../Login/LoginLoadingPage';
 import FlatListItem from './FlatListItem';
 import { any } from 'prop-types';
-import AddUserButton from '../../UXcomponents/AddUserButton';
+import AddUserButton from '../../UXcomponents/Buttons/AddUserButton';
 
 
 const GET_USERS = gql`
