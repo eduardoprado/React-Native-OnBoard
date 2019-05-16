@@ -2,9 +2,11 @@ import gql from 'graphql-tag';
 import React, { Component } from 'react';
 import { Mutation } from "react-apollo";
 import { StyleSheet, Text, View, Button } from 'react-native';
-import validation from '../validation';
+import validation from '../../validation';
 import AddUserPageForm, {AddUserPageFormData} from './AddUserPageForm';
-import LoginLoadingPage from '../Login/LoginLoadingPage';
+import { StyledView, ErrorText } from '../../UXcomponents/style';
+import Loading from '../../Login/Loading';
+import { AlignedH1Text } from '../../UXcomponents/headers/h1Text';
 
 const CREATE_OPERATION = gql`
   mutation CreateOp($email:String!, $password:String!, $name:String!, $role:UserRoleType!, $cpf:String!, $birthDate:String!){
@@ -25,10 +27,12 @@ const CREATE_OPERATION = gql`
 export default class AddUserPage extends Component<any, undefined>{
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>
+      <StyledView>
+
+        <AlignedH1Text>
           Novo usuário
-        </Text>
+        </AlignedH1Text>
+
         <Mutation
           mutation={CREATE_OPERATION}
           onCompleted={this.handleCreateSuccess}
@@ -48,21 +52,18 @@ export default class AddUserPage extends Component<any, undefined>{
                   }
                 });
               };
-
-              if (loading) {
-                return <LoginLoadingPage />
-              }
               return (
                 <>
                   <>
-                    {error && <Text>Erro: {error!.message} </Text>}
+                    {loading && <Loading/>}
+                    {error && <ErrorText> Erro: {error!.message} </ErrorText> }
                   </>
                   <AddUserPageForm onSubmit={handleSubmit} />
                 </>
               )
             }}
         </Mutation>
-      </View>
+      </StyledView>
     )
   }
 
@@ -73,16 +74,6 @@ export default class AddUserPage extends Component<any, undefined>{
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 10,
-  },
-  name: {
-    fontSize: 16,
-    padding: 10,
-    borderBottomColor: '#DCDCDC',
-    borderBottomWidth: 1,
-  },
   header: {
     fontSize: 22,
     padding: 15,

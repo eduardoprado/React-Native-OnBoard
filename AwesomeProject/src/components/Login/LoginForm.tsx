@@ -1,128 +1,98 @@
-import { gql } from "apollo-boost";
 import React, { Component } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import {Field} from '../Form/Field';
+import StyledButton from '../UXcomponents/Buttons/StyledButton';
+import { PageFormView } from '../UXcomponents/Form/PageFormView';
+import validation from '../validation';
 
-const mutationToServer = gql`
-  mutation LoginOperation {
-    Login (data:{
-      email: "admin@taqtile.com"
-      password: "1111"
-    }){
-    user{
-      id
-      birthDate
-      }
-    }
-  }
-`;
+export interface LoginFormData {
+  email: string;
+  password: string;
+}
 
-export default class LoginForm extends Component<any, {
+export interface LoginFormProps {
+  onSubmit: (data: LoginFormData) => void;
+}
+
+export interface LoginFormState{
   email: string;
   password: string;
   emailValdate: boolean;
-  passwordValidate: boolean
-}>
-{
-  constructor(props: any) {
+  passwordValidate: boolean;
+  buttonPressed: boolean;
+}
+
+export default class LoginForm extends Component<LoginFormProps, LoginFormState>{
+
+  constructor(props: LoginFormProps) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: 'admin@taqtile.com',
+      password: '1234qwer',
       emailValdate: false,
-      passwordValidate: false
+      passwordValidate: false,
+      buttonPressed: false
     }
   }
-  validate = (event: any) => {
-    let email = this.state.email
-    let password = this.state.password
-    const validemail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.com$/
-    const validPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/
-
-    if (!validemail.test(email)) {
-      this.setState({
-        emailValdate: false
-      })
-    }
-    else if (validemail.test(email)) {
-      this.setState({
-        emailValdate: true
-      })
-    }
-    if (!validPassword.test(password)) {
-      this.setState({
-        passwordValidate: false
-      })
-    }
-    else if (validPassword.test(password)) {
-      this.setState({
-        passwordValidate: true
-      })
-    }
-  }
-
 
   render() {
-    const emailValid = this.state.emailValdate
-    const passwordValid = this.state.passwordValidate
-
     return (
 
-      <View style={styles.container}>
-        <Text style={{ color: this.state.emailValdate ? '#3CB371' : '#C21807' }}>
-          Seu e-mail está {emailValid ? 'correto' : 'inválido'}
-        </Text>
+      <PageFormView>
 
-        <TextInput
-          value={this.state.email}
-          onChangeText={(text) => this.setState({ email: text })}
-          placeholder="email"
-          autoCapitalize="none"
-          style={styles.input}
-        />
+        <Field
+          onChange={this.changeStateEmail}
+          label='Email:'
+          buttonState={this.state.buttonPressed}
+          avaliationState={this.state.emailValdate}
+          validatorText='email' />
 
-        <Text>
-          Sua senha está {passwordValid ? 'correto' : 'inválida'}
-        </Text>
+        <Field
+          onChange={this.changeStatePassword}
+          label='Senha:'
+          validatorText='password'
+          buttonState={this.state.buttonPressed}
+          avaliationState={this.state.passwordValidate} />
 
-        <TextInput
-          onChangeText={(text) => this.setState({ password: text })}
-          placeholder="senha"
-          secureTextEntry
-          style={styles.input}
-        />
 
-        <TouchableOpacity
-          onPress={this.validate}
-        >
-          <Text style={styles.buttonText}>
-            Entrar
-          </Text>
-        </TouchableOpacity>
+        <StyledButton
+          onPress={this.validateLogin}
+          text="Entrar" />
 
-      </View>
+      </PageFormView>
     );
+  }
+
+  private changeStateEmail = (emailText: string) => {
+    this.setState({
+      email: emailText
+    })
+  }
+
+  private changeStatePassword = (passwordText: string) => {
+    this.setState({
+      password: passwordText
+    })
+  }
+
+  private validateLogin = () => {
+    const {
+      email,
+      password,
+    } = this.state;
+
+    let emailValidate = validation('email', email) ? true : false
+    let passwordValidate = validation('password', password) ? true : false
+
+    if (emailValidate && passwordValidate) {
+      this.setState({ emailValdate: emailValidate, passwordValidate: passwordValidate, buttonPressed: true })
+      this.props.onSubmit({
+        email,
+        password,
+      });
+      return;
+    }
+    this.setState({ emailValdate: emailValidate, passwordValidate: passwordValidate, buttonPressed: true })
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    padding: 20
-  },
-  input: {
-    height: 40,
-    backgroundColor: '#D3D3D3',
-    marginBottom: 10,
-    color: '#2d3436',
-    paddingHorizontal: 10
-
-  },
-  buttonContainer: {
-    backgroundColor: '#6c5ce7',
-    paddingVertical: 15,
-  },
-  buttonText: {
-    fontWeight: '800',
-    textAlign: 'center',
-    color: '#FFFFFF',
-  },
-});

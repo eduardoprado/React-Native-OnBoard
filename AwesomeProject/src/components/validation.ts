@@ -2,7 +2,7 @@
 
 export default function validation(type:string, text:string){
   const EMAIL_REGEX = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.com$/
-  const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-zA-Z]).{7,}|1111$/
+  const PASSWORD_REGEX = /^(?=.*\d)(?=.*[a-zA-Z]).{7,}$/
   const NAME_REGEX = /^[A-Za-z ]+$/
   const CPF_REGEX = /^([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})$/
   const BIRTHDATE_REGEX = /^([12]\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))/

@@ -1,12 +1,14 @@
 import React from 'react';
 import { Component } from 'react';
-import {  StyleSheet, Text, View, SafeAreaView } from 'react-native';
+import { View, SafeAreaView, Image } from 'react-native';
 import LoginForm, { LoginFormData } from './LoginForm';
-import { gql} from "apollo-boost";
+import { gql } from "apollo-boost";
 import { Mutation } from "react-apollo";
-import { AUTH_KEY } from '../../constants';
+import { AUTH_KEY } from '../constants';
 import AsyncStorage from '@react-native-community/async-storage';
-import LoginLoadingPage from './LoginLoadingPage';
+import { StyledView, ErrorText} from '../UXcomponents/style';
+import { AlignedH1Text } from '../UXcomponents/headers/H1Text';
+import Loading from './Loading';
 
 
 
@@ -25,44 +27,45 @@ const mutationToServer = gql`
 export default class LoginPage extends Component<any, undefined> {
   render() {
     return (
-      <View style={styles.container}>
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.header}>Bem vindo(a) à Taqtile!</Text>
+      <StyledView>
+        <SafeAreaView>
+
+          <AlignedH1Text> Bem vindo(a) Taqtile! </AlignedH1Text>
+
+          <View style={{alignItems:"center"}}>
+            <Image source={require('../../images/Taqtile_logo.png')} />
           </View>
-        </SafeAreaView>
-        <Mutation
-          mutation={mutationToServer}
-          onCompleted={this.handleLoginSuccess}
-        >
 
-          {(mutationFunction, { loading, error }) => {
+          <Mutation
+            mutation={mutationToServer}
+            onCompleted={this.handleLoginSuccess}
+          >
 
-            const handleSubmit = (loginFormData: LoginFormData) => {
-              const { email, password } = loginFormData;
+            {(mutationFunction, { loading, error }) => {
 
-              mutationFunction({
-                variables: {
-                  email,
-                  password,
-                }
-              });
-            };
+              const handleSubmit = (loginFormData: LoginFormData) => {
+                const { email, password } = loginFormData;
 
-            if (loading) {
-              return <LoginLoadingPage />
-            }
-            return (
-              <>
+                mutationFunction({
+                  variables: {
+                    email,
+                    password,
+                  }
+                });
+              };
+              return (
                 <>
-                {error && <Text>Erro: {error!.message} </Text>}
+                  <>
+                    {loading && <Loading />}
+                    {error && <ErrorText>Erro: {error!.message} </ErrorText>}
+                  </>
+                  <LoginForm onSubmit={handleSubmit} />
                 </>
-                <LoginForm onSubmit={handleSubmit} />
-              </>
-            )
-          }}
-        </Mutation>
-      </View>
+              )
+            }}
+          </Mutation>
+        </SafeAreaView>
+      </StyledView>
     );
   }
 
@@ -74,22 +77,3 @@ export default class LoginPage extends Component<any, undefined> {
   }
 
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFF',
-  },
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    fontSize: 15,
-    textAlign: 'center',
-    color: '#F00000',
-    marginBottom: 5,
-  },
-});
