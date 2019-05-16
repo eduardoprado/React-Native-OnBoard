@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { Text } from 'react-native';
-import validation from '../validation';
 import { ErrorText } from '../UXcomponents/style';
 
 export default class ErrorCaption extends Component<{

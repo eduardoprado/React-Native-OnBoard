@@ -4,8 +4,9 @@ import { Mutation } from "react-apollo";
 import { StyleSheet, Text, View, Button } from 'react-native';
 import validation from '../../validation';
 import AddUserPageForm, {AddUserPageFormData} from './AddUserPageForm';
-import LoginLoadingPage from '../../Login/LoginLoadingPage';
 import { StyledView, ErrorText } from '../../UXcomponents/style';
+import Loading from '../../Login/Loading';
+import { AlignedH1Text } from '../../UXcomponents/headers/h1Text';
 
 const CREATE_OPERATION = gql`
   mutation CreateOp($email:String!, $password:String!, $name:String!, $role:UserRoleType!, $cpf:String!, $birthDate:String!){
@@ -28,9 +29,9 @@ export default class AddUserPage extends Component<any, undefined>{
     return (
       <StyledView>
 
-        <Text style={styles.header}>
+        <AlignedH1Text>
           Novo usuário
-        </Text>
+        </AlignedH1Text>
 
         <Mutation
           mutation={CREATE_OPERATION}
@@ -54,7 +55,7 @@ export default class AddUserPage extends Component<any, undefined>{
               return (
                 <>
                   <>
-                    {loading && <LoginLoadingPage/>}
+                    {loading && <Loading/>}
                     {error && <ErrorText> Erro: {error!.message} </ErrorText> }
                   </>
                   <AddUserPageForm onSubmit={handleSubmit} />

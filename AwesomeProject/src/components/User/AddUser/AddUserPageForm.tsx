@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { TextInput, ScrollView } from 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
+import {ScrollView } from 'react-native-gesture-handler';
 import validation from '../../validation';
-import StyledButton from '../../UXcomponents/Buttons/StyledButton';
-import Form from '../../Form/Form';
+import {Field} from '../../Form/Field';
 import AddUserButton from '../../UXcomponents/Buttons/AddUserButton';
 
 export interface AddUserPageFormData {
@@ -58,44 +57,44 @@ export default class AddUserPageForm extends Component<AddUserFormProps, AddUser
     return (
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
 
-        <Form
+        <Field
         onChange={this.changeStateName}
-        header='Nome:'
+        label='Nome:'
         validatorText= 'name'
         buttonState={this.state.buttonPressed}
         avaliationState={this.state.nameValidate}/>
 
-        <Form
+        <Field
         onChange={this.changeStateEmail}
-        header='Email:'
+        label='Email:'
         validatorText= 'email'
         buttonState={this.state.buttonPressed}
         avaliationState={this.state.emailValidate}/>
 
-        <Form
+        <Field
         onChange={this.changeStateCpf}
-        header='CPF:'
+        label='CPF:'
         validatorText= 'cpf'
         buttonState={this.state.buttonPressed}
         avaliationState={this.state.cpfValidate}/>
 
-        <Form
+        <Field
         onChange={this.changeStateBirthDate}
-        header='Data de nascimento'
+        label='Data de nascimento'
         validatorText= 'birthDate'
         buttonState={this.state.buttonPressed}
         avaliationState={this.state.birthDateValidate}/>
 
-        <Form
+        <Field
         onChange={this.changeStatePassword}
-        header='Senha'
+        label='Senha'
         validatorText= 'password'
         buttonState={this.state.buttonPressed}
         avaliationState={this.state.passwordValidate}/>
 
-        <Form
+        <Field
         onChange={this.changeStateRole}
-        header='Função'
+        label='Função'
         validatorText= 'role'
         buttonState={this.state.buttonPressed}
         avaliationState={this.state.roleValidate}/>
@@ -142,6 +141,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, AddUser
       role: roleText
     })
   }
+
   private validateUser = () => {
     const {
       email,
@@ -181,10 +181,7 @@ export default class AddUserPageForm extends Component<AddUserFormProps, AddUser
     })
   }
 
-
-
 }
-
 
 
 
@@ -192,18 +189,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 22,
-  },
-  name: {
-    fontSize: 18,
-    padding: 10,
-    borderBottomColor: '#DCDCDC',
-    borderBottomWidth: 1,
-  },
-  validatorText: {
-    fontSize: 28,
-    padding: 15,
-    textAlign: 'center',
-    color: '#0AE',
-    fontWeight: "200"
   }
 });

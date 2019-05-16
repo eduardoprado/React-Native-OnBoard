@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { StyledText } from '../UXcomponents/style';
 import ErrorCaption from './ErrorCaption'
-import {FormInput} from '../UXcomponents/Form/FormInput'
-import {FormView} from '../UXcomponents/Form/FormView'
+import { FormView } from '../UXcomponents/Form/FormView';
+import { FormInput } from '../UXcomponents/Form/FormInput';
+
 
 export interface FormProps{
-  header: string;
+  label: string;
   buttonState: boolean;
   avaliationState: boolean;
   validatorText: string;
@@ -16,13 +17,13 @@ export interface FormState{
   validation:string;
 }
 
-export default class Form extends Component<FormProps,FormState>{
+export class Field extends Component<FormProps,FormState>{
 
   render() {
     return (
 
       <FormView>
-        <StyledText> {this.props.header} </StyledText>
+        <StyledText> {this.props.label} </StyledText>
 
         <FormInput
           onChangeText = {(text)=> this.handleChange(text)}

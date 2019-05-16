@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { TouchableOpacity, StyleSheet, Text } from 'react-native';
-import { ButtonText } from '../style';
+import { TouchableOpacity, StyleSheet} from 'react-native';
+import { ButtonText } from './ButtonStyle/ButtonText';
 
 export interface ButtonProps {
   onPress: (e:any)=>void

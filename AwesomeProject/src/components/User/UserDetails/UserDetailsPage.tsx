@@ -1,11 +1,10 @@
 import gql from 'graphql-tag';
 import React, { Component } from 'react';
 import { Query } from "react-apollo";
-import { FlatList, StyleSheet, Text, View, Button } from 'react-native';
-import LoginLoadingPage from '../../Login/LoginLoadingPage';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import StyledButton from '../../UXcomponents/Buttons/StyledButton';
+import { StyleSheet, Text, View } from 'react-native';
 import { StyleView, ErrorText } from '../../UXcomponents/style';
+import { H1Text } from '../../UXcomponents/headers/H1Text';
+import Loading from '../../Login/Loading';
 
 const GET_INFO = gql`
   query Users($id: Int!){
@@ -28,17 +27,33 @@ export default class UserDetailsPage extends Component<any, {}>{
 
         {({ loading, error, data }) => {
           if (loading) {
-            return <LoginLoadingPage />
+            return <Loading />
           } if (error) {
             return <ErrorText> {error.message} </ErrorText>
           } return (
             <StyleView>
 
-              <Text style={styles.name}>{data.User.name}</Text>
-              <Text style={styles.email}>email: {data.User.email}</Text>
-              <Text style={styles.email}>CPF: {data.User.cpf}</Text>
-              <Text style={styles.email}>data de nascimento: {data.User.birthDate}</Text>
-              <Text style={styles.email}>id: {data.User.id}</Text>
+              <H1Text>{data.User.name}</H1Text>
+
+              <View style={styles.view}>
+                <Text style={styles.title}> email: </Text>
+                <Text style={styles.explanation}> {data.User.email} </Text>
+              </View>
+
+              <View style={styles.view}>
+                <Text style={styles.title}> CPF: </Text>
+                <Text style={styles.explanation}> {data.User.cpf}</Text>
+              </View>
+
+              <View style={styles.view}>
+                <Text style={styles.title}> data de nascimento:</Text>
+                <Text style={styles.explanation}> {data.User.birthDate}</Text>
+              </View>
+
+              <View style={styles.view}>
+                <Text style={styles.title}> id: </Text>
+                <Text style={styles.explanation}>{data.User.id}</Text>
+              </View>
 
             </StyleView>
           );
@@ -50,13 +65,21 @@ export default class UserDetailsPage extends Component<any, {}>{
 
 
 const styles = StyleSheet.create({
-  name: {
-    fontSize: 26,
+  explanation: {
+    fontSize: 16,
     padding: 10
   },
-  email: {
-    fontSize: 20,
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold'
+  },
+  view: {
     padding: 10
   },
+  id: {
+    marginBottom: 40,
+    flex: 1,
+    flexDirection: 'row',
 
+  }
 });

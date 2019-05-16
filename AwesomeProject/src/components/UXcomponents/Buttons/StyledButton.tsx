@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { StyledTouchableOpacity, ButtonText } from '../style';
+import { ButtonText } from './ButtonStyle/ButtonText';
+import { StyledTouchableOpacity } from './ButtonStyle/StyledTouchableOpacity';
 
 export interface ButtonProps {
   onPress: (e:any)=>void

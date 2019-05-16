@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import Form from '../Form/Form';
+import {Field} from '../Form/Field';
 import StyledButton from '../UXcomponents/Buttons/StyledButton';
 import { PageFormView } from '../UXcomponents/Form/PageFormView';
 import validation from '../validation';
@@ -27,60 +27,29 @@ export default class LoginForm extends Component<LoginFormProps, LoginFormState>
   constructor(props: LoginFormProps) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: 'admin@taqtile.com',
+      password: '1234qwer',
       emailValdate: false,
       passwordValidate: false,
       buttonPressed: false
     }
   }
-  validate = (event: any) => {
-    let email = this.state.email
-    let password = this.state.password
-    const validemail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.com$/
-    const validPassword = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,}$/
-
-    if (!validemail.test(email)) {
-      this.setState({
-        emailValdate: false
-      })
-    }
-    else if (validemail.test(email)) {
-      this.setState({
-        emailValdate: true
-      })
-    }
-    if (!validPassword.test(password)) {
-      this.setState({
-        passwordValidate: false
-      })
-    }
-    else if (validPassword.test(password)) {
-      this.setState({
-        passwordValidate: true
-      })
-    }
-  }
-
 
   render() {
-    const emailValid = this.state.emailValdate
-    const passwordValid = this.state.passwordValidate
-
     return (
 
       <PageFormView>
 
-        <Form
+        <Field
           onChange={this.changeStateEmail}
-          header='Email:'
+          label='Email:'
           buttonState={this.state.buttonPressed}
           avaliationState={this.state.emailValdate}
           validatorText='email' />
 
-        <Form
+        <Field
           onChange={this.changeStatePassword}
-          header='Senha:'
+          label='Senha:'
           validatorText='password'
           buttonState={this.state.buttonPressed}
           avaliationState={this.state.passwordValidate} />
@@ -93,6 +62,7 @@ export default class LoginForm extends Component<LoginFormProps, LoginFormState>
       </PageFormView>
     );
   }
+
   private changeStateEmail = (emailText: string) => {
     this.setState({
       email: emailText
@@ -126,28 +96,3 @@ export default class LoginForm extends Component<LoginFormProps, LoginFormState>
   }
 }
 
-
-
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 20
-  },
-  input: {
-    height: 40,
-    backgroundColor: '#D3D3D3',
-    marginBottom: 10,
-    color: '#2d3436',
-    paddingHorizontal: 10
-
-  },
-  buttonContainer: {
-    backgroundColor: '#6c5ce7',
-    paddingVertical: 15,
-  },
-  buttonText: {
-    fontWeight: '800',
-    textAlign: 'center',
-    color: '#FFFFFF',
-  },
-});
